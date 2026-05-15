@@ -15,32 +15,6 @@
   transform: translateX(-50%);
 }
 
-.filter-btn,
-.search-btn {
-  cursor: pointer;
-  padding: 6px 10px;
-}
-
-.filter-dropdown {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 10px;
-}
-
-.filter-dropdown ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.filter-dropdown li {
-  padding: 5px 0;
-  cursor: pointer;
-}
-
 .search-input {
   padding: 5px;
 }

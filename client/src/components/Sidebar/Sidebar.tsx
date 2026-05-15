@@ -1,14 +1,14 @@
 import "./Sidebar.css";
+import { Link } from "react-router-dom";
 
 function Sidebar() {
   return (
     <aside className="sidebar">
       <nav className="sidebar-nav">
         <ul>
-          <li className="sidebar-item active">Dashboard</li>
-          <li className="sidebar-item">Projects</li>
-          <li className="sidebar-item">Tasks</li>
-          <li className="sidebar-item">Analytics</li>
+          <Link to="/dashboard">
+            <li className="sidebar-item active">Dashboard</li>
+          </Link>
         </ul>
       </nav>
     </aside>

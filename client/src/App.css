@@ -12,3 +12,12 @@ body {
   flex: 1;
   display: flex;
 }
+
+.content {
+  padding-left: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

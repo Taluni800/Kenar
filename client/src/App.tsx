@@ -1,7 +1,7 @@
 import "./App.css";
 import Topbar from "./components/Topbar/Topbar";
 import Sidebar from "./components/Sidebar/Sidebar";
-import AppContent from "./components/AppContent/AppContent";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
@@ -9,7 +9,9 @@ function App() {
       <Topbar />
       <div className="layout">
         <Sidebar />
-        <AppContent />
+        <main className="content">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

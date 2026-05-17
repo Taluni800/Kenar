@@ -1,9 +1,33 @@
-import { useState } from "react";
-import "./Topbar.css";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import "./Topbar.css";
+import { db } from "../../db";
 
 function Topbar() {
-  const [showSearch, setSearch] = useState(false);
+  const [showCreation, setCreation] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  async function addNote(title: string) {
+    try {
+      await db.notes.add({
+        title: title,
+        content: "",
+        createdTime: Date.now(),
+        modifiedTime: Date.now(),
+      });
+      alert(`note with title ${title} is created`);
+    } catch (error) {
+      alert(`Failed to create note: ${error}`);
+    }
+  }
+
+  function plusBtn() {
+    if (inputRef.current) {
+      const curInputText = inputRef.current.value;
+      addNote(curInputText);
+    }
+    setCreation((prev) => !prev);
+  }
 
   return (
     <header className="topbar">
@@ -16,15 +40,21 @@ function Topbar() {
         <h1 className="topbar-title">Kenar</h1>
       </div>
       <div className="topbar-right">
-        {showSearch && (
-          <input type="text" className="search-input" placeholder="Search..." />
+        {showCreation && (
+          <div className="noteCreation">
+            <input
+              type="text"
+              ref={inputRef}
+              id="title-input"
+              placeholder="Title..."
+            />
+            <button onClick={plusBtn}>+</button>
+          </div>
         )}
-        <button
-          className="search-btn"
-          onClick={() => setSearch((prev) => !prev)}
-        >
-          🔍
-        </button>
+
+        {!showCreation && (
+          <button onClick={() => setCreation((prev) => !prev)}>Add note</button>
+        )}
       </div>
     </header>
   );

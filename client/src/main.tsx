@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "/dashboard/:noteId",
+        path: "/dashboard/:noteID",
         element: <NotePage />,
       },
     ],

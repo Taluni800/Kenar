@@ -1,5 +1,6 @@
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
+import NotesList from "../NotesList/NotesList";
 
 function Sidebar() {
   return (
@@ -8,7 +9,9 @@ function Sidebar() {
         <li className="sidebar-item active">Dashboard</li>
       </Link>
       <nav className="sidebar-nav">
-        <ul></ul>
+        <ul>
+          <NotesList />
+        </ul>
       </nav>
     </aside>
   );

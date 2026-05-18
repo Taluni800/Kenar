@@ -17,7 +17,14 @@ function* generateColumn(notes: Note[]) {
 }
 
 function NotesList() {
-  return;
+  const notes = useLiveQuery(() => db.notes.toArray());
+
+  if (!notes) return <p>Loading...</p>;
+  if (notes.length === 0) return <p>No notes yet</p>;
+
+  const list = [...generateColumn(notes)];
+
+  return list;
 }
 
 export default NotesList;

@@ -12,9 +12,10 @@ function Topbar() {
       try {
         await db.notes.add({
           title: title,
-          content: "",
+          pinned: false,
           createdTime: Date.now(),
           modifiedTime: Date.now(),
+          content: "",
         });
         alert(`note with title ${title} is created`);
       } catch (error) {

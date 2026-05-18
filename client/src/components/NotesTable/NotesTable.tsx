@@ -25,6 +25,7 @@ function* generateRows(notes: Note[]): Generator<ReactElement> {
         <td>{note.title}</td>
         <td>{createdAt}</td>
         <td>{modifiedAt}</td>
+        <td>{note.priority}</td>
       </tr>
     );
   }
@@ -45,6 +46,7 @@ function NotesTable() {
           <th>Title</th>
           <th>Created at</th>
           <th>Modified at</th>
+          <th>Priority</th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>

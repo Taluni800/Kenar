@@ -6,7 +6,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 function NotePage() {
   const params = useParams<{ noteID: string }>();
   const id: number = Number(params.noteID);
-  const note = useLiveQuery(() => db.notes.get(id));
+  const note = useLiveQuery(() => db.notes.get(id), [id]);
   if (!note) return <NotFoundPage />;
 
   return (

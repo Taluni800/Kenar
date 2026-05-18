@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import { db, type Note } from "../../db";
 import { useLiveQuery } from "dexie-react-hooks";
+import "./NotesList.css";
 
 function* generateRows(notes: Note[]): Generator<ReactElement> {
   for (const note of notes) {

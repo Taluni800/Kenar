@@ -1,4 +1,4 @@
-import NotesTable from "../NotesList/NotesTable";
+import NotesTable from "../NotesTable/NotesTable";
 
 function Dashboard() {
   return (

@@ -1,8 +1,12 @@
 import type { ReactElement } from "react";
 import { db, type Note } from "../../db";
 import { useLiveQuery } from "dexie-react-hooks";
-import "./NotesList.css";
+import "./NotesTable.css";
 import { Link } from "react-router-dom";
+
+async function changePin(noteID: number, pinStatus: boolean) {
+  await db.notes.update(noteID, { pinned: !pinStatus });
+}
 
 function* generateRows(notes: Note[]): Generator<ReactElement> {
   for (const note of notes) {
@@ -11,7 +15,12 @@ function* generateRows(notes: Note[]): Generator<ReactElement> {
     yield (
       <tr key={note.id}>
         <td>
-          <Link to={`/dashboard/${note.id}`}>{note.id}</Link>
+          <div className="ID-section">
+            <button onClick={() => changePin(note.id ?? NaN, note.pinned)}>
+              {note.pinned ? "Unpin" : "Pin"}
+            </button>
+            <Link to={`/dashboard/${note.id}`}>{note.id}</Link>
+          </div>
         </td>
         <td>{note.title}</td>
         <td>{createdAt}</td>

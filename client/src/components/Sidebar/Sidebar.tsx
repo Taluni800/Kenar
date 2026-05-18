@@ -6,8 +6,9 @@ function Sidebar() {
   return (
     <aside className="sidebar">
       <Link to="/dashboard">
-        <p className="sidebar-item active">Dashboard</p>
+        <h1 className="sidebar-item active">Dashboard</h1>
       </Link>
+      <h1>ToDo</h1>
       <nav className="navbar">
         <ul className="nav-list">
           <NotesList />

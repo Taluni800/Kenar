@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function* generateColumn(notes: Note[]) {
   for (const note of notes) {
     yield (
-      <li className="nav-item">
+      <li className="nav-item" key={note.id}>
         <Link to={`/dashboard/${note.id}`}>
           {note.pinned ? "📌 " : ""}
           {note.title}

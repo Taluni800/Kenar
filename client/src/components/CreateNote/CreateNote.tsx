@@ -1,17 +1,20 @@
 import { db } from "../../db";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 function CreateNote() {
   const titleInputRef = useRef<HTMLInputElement>(null);
   const TDLInputRef = useRef<HTMLInputElement>(null); // Till DeadLine
   const DITInputRef = useRef<HTMLInputElement>(null); //Days It Takes
+  const ToDoCheckRef = useRef<HTMLInputElement>(null);
+  const [showToDo, setShowToDo] = useState<boolean>(false);
 
-  async function addNote(title: string, priority: number) {
+  async function addToDo(title: string, priority: number, ToDo: boolean) {
     try {
       await db.notes.add({
         title: title,
         pinned: false,
         priority: priority,
+        ToDo: ToDo,
         createdTime: Date.now(),
         modifiedTime: Date.now(),
         content: "",
@@ -22,21 +25,38 @@ function CreateNote() {
     }
   }
 
-  function plusBtn() {
-    if (titleInputRef.current && TDLInputRef.current && DITInputRef.current) {
-      const curInputText = titleInputRef.current.value;
-      const TDLDaysCount: number = Number(TDLInputRef.current.value);
-      const DITCount: number = Number(DITInputRef.current.value);
-      if (
-        titleInputRef.current.value &&
-        TDLInputRef.current.value &&
-        DITInputRef.current.value
-      ) {
-        const priority: number = -1 * (TDLDaysCount - DITCount);
+  async function addNote(title: string) {
+    try {
+      await db.notes.add({
+        title: title,
+        pinned: false,
+        priority: -100,
+        ToDo: false,
+        createdTime: Date.now(),
+        modifiedTime: Date.now(),
+        content: "",
+      });
+    } catch (error) {
+      alert(`Failed to create note: ${error}`);
+    }
+  }
 
-        addNote(curInputText, priority);
+  function plusBtn() {
+    if (titleInputRef.current) {
+      const curInputText = titleInputRef.current.value;
+      if (TDLInputRef.current && DITInputRef.current && ToDoCheckRef.current) {
+        if (TDLInputRef.current.value && DITInputRef.current.value) {
+          const TDLDaysCount: number = Number(TDLInputRef.current.value);
+          const DITCount: number = Number(DITInputRef.current.value);
+          const ToDoCheck: boolean = ToDoCheckRef.current.checked;
+          const priority: number = -1 * (TDLDaysCount - DITCount);
+
+          addToDo(curInputText, priority, ToDoCheck);
+        } else {
+          alert("Fill priority fields");
+        }
       } else {
-        alert("Fill the fields");
+        addNote(curInputText);
       }
     }
   }
@@ -46,14 +66,31 @@ function CreateNote() {
       <h1>Create note</h1>
       <div className="inputs">
         <input type="text" ref={titleInputRef} placeholder="Title" />
-        <input type="text" ref={TDLInputRef} placeholder="Days till deadline" />
-        <input
-          type="text"
-          ref={DITInputRef}
-          placeholder="How much days you need"
-        />
-        <button onClick={plusBtn}>+</button>
+
+        <div className="ToDo-container">
+          <h3>ToDo</h3>
+          <input
+            type="checkbox"
+            ref={ToDoCheckRef}
+            onClick={() => setShowToDo((prev) => !prev)}
+          />
+          {showToDo && (
+            <input
+              type="text"
+              ref={TDLInputRef}
+              placeholder="Days till deadline"
+            />
+          )}
+          {showToDo && (
+            <input
+              type="text"
+              ref={DITInputRef}
+              placeholder="How much days you need"
+            />
+          )}
+        </div>
       </div>
+      <button onClick={plusBtn}>+</button>
     </div>
   );
 }

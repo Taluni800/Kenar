@@ -5,6 +5,7 @@ export interface Note {
   title: string;
   pinned: boolean;
   priority: number;
+  ToDo: boolean;
   createdTime: number;
   modifiedTime: number;
   content: string;
@@ -24,6 +25,10 @@ class NotesDatabase extends Dexie {
     this.version(3).stores({
       notes:
         "++id, pinned, priority, title, createdTime, modifiedTime, content",
+    });
+    this.version(4).stores({
+      notes:
+        "++id, pinned, priority, ToDo, title, createdTime, modifiedTime, content",
     });
   }
 }

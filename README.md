@@ -6,4 +6,4 @@ Web-app to structure your notes and to-do-lists.
 
 - React
 - Vite
-- Node.js
+- Dexie.js

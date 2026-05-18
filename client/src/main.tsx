@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.tsx";
 import Greetingpage from "./components/Greetingpage/Greetingpage.tsx";
 import Dashboard from "./components/Dashboard/Dashboard.tsx";
+import NotePage from "./components/NotePage/NotePage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/dashboard/:noteId",
+        element: <NotePage />,
       },
     ],
   },

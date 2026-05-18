@@ -2,6 +2,7 @@ import type { ReactElement } from "react";
 import { db, type Note } from "../../db";
 import { useLiveQuery } from "dexie-react-hooks";
 import "./NotesList.css";
+import { Link } from "react-router-dom";
 
 function* generateRows(notes: Note[]): Generator<ReactElement> {
   for (const note of notes) {
@@ -9,6 +10,9 @@ function* generateRows(notes: Note[]): Generator<ReactElement> {
     const modifiedAt = new Date(note.modifiedTime).toLocaleString();
     yield (
       <tr key={note.id}>
+        <td>
+          <Link to={`/dashboard/${note.id}`}>{note.id}</Link>
+        </td>
         <td>{note.title}</td>
         <td>{createdAt}</td>
         <td>{modifiedAt}</td>
@@ -28,6 +32,7 @@ function NotesTable() {
     <table>
       <thead>
         <tr>
+          <th>ID</th>
           <th>Title</th>
           <th>Created at</th>
           <th>Modified at</th>

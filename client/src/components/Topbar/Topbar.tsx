@@ -4,36 +4,6 @@ import "./Topbar.css";
 import { db } from "../../db";
 
 function Topbar() {
-  const [showCreation, setCreation] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  async function addNote(title: string) {
-    if (title) {
-      try {
-        await db.notes.add({
-          title: title,
-          pinned: false,
-          createdTime: Date.now(),
-          modifiedTime: Date.now(),
-          content: "",
-        });
-        alert(`note with title ${title} is created`);
-      } catch (error) {
-        alert(`Failed to create note: ${error}`);
-      }
-    } else {
-      alert("Write a title");
-    }
-  }
-
-  function plusBtn() {
-    if (inputRef.current) {
-      const curInputText = inputRef.current.value;
-      addNote(curInputText);
-    }
-    setCreation((prev) => !prev);
-  }
-
   return (
     <header className="topbar">
       <div className="topbar-left">
@@ -45,21 +15,9 @@ function Topbar() {
         <h1 className="topbar-title">Kenar</h1>
       </div>
       <div className="topbar-right">
-        {showCreation && (
-          <div className="noteCreation">
-            <input
-              type="text"
-              ref={inputRef}
-              id="title-input"
-              placeholder="Title..."
-            />
-            <button onClick={plusBtn}>+</button>
-          </div>
-        )}
-
-        {!showCreation && (
-          <button onClick={() => setCreation((prev) => !prev)}>Add note</button>
-        )}
+        <Link to={"/create"}>
+          <h3>Create</h3>
+        </Link>
       </div>
     </header>
   );

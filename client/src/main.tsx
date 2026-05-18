@@ -7,6 +7,7 @@ import NotFoundPage from "./components/NotFoundPage/NotFoundPage.tsx";
 import Greetingpage from "./components/Greetingpage/Greetingpage.tsx";
 import Dashboard from "./components/Dashboard/Dashboard.tsx";
 import NotePage from "./components/NotePage/NotePage.tsx";
+import CreateNote from "./components/CreateNote/CreateNote.tsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/:noteID",
         element: <NotePage />,
+      },
+      {
+        path: "/create",
+        element: <CreateNote />,
       },
     ],
   },

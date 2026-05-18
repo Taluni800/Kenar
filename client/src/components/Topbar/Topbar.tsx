@@ -8,16 +8,20 @@ function Topbar() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   async function addNote(title: string) {
-    try {
-      await db.notes.add({
-        title: title,
-        content: "",
-        createdTime: Date.now(),
-        modifiedTime: Date.now(),
-      });
-      alert(`note with title ${title} is created`);
-    } catch (error) {
-      alert(`Failed to create note: ${error}`);
+    if (title) {
+      try {
+        await db.notes.add({
+          title: title,
+          content: "",
+          createdTime: Date.now(),
+          modifiedTime: Date.now(),
+        });
+        alert(`note with title ${title} is created`);
+      } catch (error) {
+        alert(`Failed to create note: ${error}`);
+      }
+    } else {
+      alert("Write a title");
     }
   }
 

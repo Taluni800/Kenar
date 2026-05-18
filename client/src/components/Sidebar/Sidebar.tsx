@@ -6,10 +6,10 @@ function Sidebar() {
   return (
     <aside className="sidebar">
       <Link to="/dashboard">
-        <li className="sidebar-item active">Dashboard</li>
+        <p className="sidebar-item active">Dashboard</p>
       </Link>
-      <nav className="sidebar-nav">
-        <ul>
+      <nav className="navbar">
+        <ul className="nav-list">
           <NotesList />
         </ul>
       </nav>

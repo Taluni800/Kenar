@@ -41,12 +41,23 @@ function* generateColumn(notes: { value: Note; priority: number }[]) {
     yield (
       <li className="nav-item" key={value.id}>
         <Link to={`/dashboard/${value.id}`}>
-          {/* {value.pinned ? "📌 " : ""} */}
-          {value.title}
+          {/* {value.pinned ? "📌 " : ""} */}● {value.title}
         </Link>
       </li>
     );
   }
+}
+
+function bulidQueue(notes: Note[]) {
+  const queue = new Queue<Note>();
+  notes.forEach((note) => {
+    if (note.priority !== -100) queue.addNote(note, note.priority);
+  });
+  const queueArr = queue.toArray();
+
+  const list = [...generateColumn(queueArr)];
+
+  return list;
 }
 
 function NotesList() {
@@ -55,13 +66,7 @@ function NotesList() {
   if (!notes) return <p>Loading...</p>;
   if (notes.length === 0) return <p>No notes yet</p>;
 
-  const queue = new Queue<Note>();
-  notes.forEach((note) => {
-    if (note.priority !== -100) queue.addNote(note, note.priority);
-  });
-  const queueArr = queue.toArray();
-
-  const list = [...generateColumn(queueArr)];
+  const list = bulidQueue(notes);
 
   return list;
 }

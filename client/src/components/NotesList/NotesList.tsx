@@ -35,13 +35,14 @@ class Queue<T> {
   }
 }
 
-function* generateColumn(notes: Note[]) {
+function* generateColumn(notes: { value: Note; priority: number }[]) {
   for (const note of notes) {
+    const value = note.value;
     yield (
-      <li className="nav-item" key={note.id}>
-        <Link to={`/dashboard/${note.id}`}>
-          {note.pinned ? "📌 " : ""}
-          {note.title}
+      <li className="nav-item" key={value.id}>
+        <Link to={`/dashboard/${value.id}`}>
+          {/* {value.pinned ? "📌 " : ""} */}
+          {value.title}
         </Link>
       </li>
     );
@@ -60,7 +61,7 @@ function NotesList() {
   });
   const queueArr = queue.toArray();
 
-  const list = [...generateColumn(notes)];
+  const list = [...generateColumn(queueArr)];
 
   return list;
 }

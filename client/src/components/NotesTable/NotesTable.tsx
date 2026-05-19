@@ -4,9 +4,9 @@ import { useLiveQuery } from "dexie-react-hooks";
 import "./NotesTable.css";
 import { Link } from "react-router-dom";
 
-async function changePin(noteID: number, pinStatus: boolean) {
-  await db.notes.update(noteID, { pinned: !pinStatus });
-}
+// async function changePin(noteID: number, pinStatus: boolean) {
+//   await db.notes.update(noteID, { pinned: !pinStatus });
+// }
 
 function* generateRows(notes: Note[]): Generator<ReactElement> {
   for (const note of notes) {

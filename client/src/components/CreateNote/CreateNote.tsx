@@ -1,5 +1,6 @@
 import { db } from "../../db";
 import { useRef, useState } from "react";
+import "./CreateNote.css";
 
 function CreateNote() {
   const titleInputRef = useRef<HTMLInputElement>(null);
@@ -49,7 +50,7 @@ function CreateNote() {
           const TDLDaysCount: number = Number(TDLInputRef.current.value);
           const DITCount: number = Number(DITInputRef.current.value);
           const ToDoCheck: boolean = ToDoCheckRef.current.checked;
-          let priority: number = -100; // = -1 * (TDLDaysCount - DITCount);
+          let priority: number = -100;
 
           if (TDLDaysCount - DITCount < 0) {
             priority = 0;
@@ -73,30 +74,36 @@ function CreateNote() {
       <div className="inputs">
         <input type="text" ref={titleInputRef} placeholder="Title" />
 
+        <h3>ToDo</h3>
         <div className="ToDo-container">
-          <h3>ToDo</h3>
           <input
             type="checkbox"
             ref={ToDoCheckRef}
             onClick={() => setShowToDo((prev) => !prev)}
           />
           {showToDo && (
-            <input
-              type="text"
-              ref={TDLInputRef}
-              placeholder="Days till deadline"
-            />
+            <div>
+              <h3>Days till deadline</h3>
+              <input
+                type="text"
+                ref={TDLInputRef}
+                placeholder="Number of days"
+              />
+            </div>
           )}
           {showToDo && (
-            <input
-              type="text"
-              ref={DITInputRef}
-              placeholder="How much days you need"
-            />
+            <div>
+              <h3>How much days task takes</h3>
+              <input
+                type="text"
+                ref={DITInputRef}
+                placeholder="Number of days"
+              />
+            </div>
           )}
         </div>
+        <button onClick={plusBtn}>+</button>
       </div>
-      <button onClick={plusBtn}>+</button>
     </div>
   );
 }

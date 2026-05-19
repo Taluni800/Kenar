@@ -16,9 +16,9 @@ function* generateRows(notes: Note[]): Generator<ReactElement> {
       <tr key={note.id}>
         <td>
           <div className="ID-section">
-            <button onClick={() => changePin(note.id ?? NaN, note.pinned)}>
+            {/* <button onClick={() => changePin(note.id ?? NaN, note.pinned)}>
               {note.pinned ? "Unpin" : "Pin"}
-            </button>
+            </button> */}
             <Link to={`/dashboard/${note.id}`}>{note.id}</Link>
           </div>
         </td>

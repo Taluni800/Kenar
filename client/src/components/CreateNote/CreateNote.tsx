@@ -49,7 +49,13 @@ function CreateNote() {
           const TDLDaysCount: number = Number(TDLInputRef.current.value);
           const DITCount: number = Number(DITInputRef.current.value);
           const ToDoCheck: boolean = ToDoCheckRef.current.checked;
-          const priority: number = -1 * (TDLDaysCount - DITCount);
+          let priority: number = -100; // = -1 * (TDLDaysCount - DITCount);
+
+          if (TDLDaysCount - DITCount < 0) {
+            priority = 0;
+          } else {
+            priority = TDLDaysCount - DITCount;
+          }
 
           addToDo(curInputText, priority, ToDoCheck);
         } else {
@@ -63,7 +69,7 @@ function CreateNote() {
 
   return (
     <div className="form-container">
-      <h1>Create note</h1>
+      <h1>Create</h1>
       <div className="inputs">
         <input type="text" ref={titleInputRef} placeholder="Title" />
 

@@ -15,14 +15,8 @@ function* generateRows(notes: Note[]): Generator<ReactElement> {
     yield (
       <tr key={note.id}>
         <td>
-          <div className="ID-section">
-            {/* <button onClick={() => changePin(note.id ?? NaN, note.pinned)}>
-              {note.pinned ? "Unpin" : "Pin"}
-            </button> */}
-            <Link to={`/dashboard/${note.id}`}>{note.id}</Link>
-          </div>
+          <Link to={`/dashboard/${note.id}`}>{note.title}</Link>
         </td>
-        <td>{note.title}</td>
         <td>{createdAt}</td>
         <td>{modifiedAt}</td>
         <td>{note.priority}</td>
@@ -39,10 +33,9 @@ function NotesTable() {
 
   const rows = [...generateRows(notes)];
   return (
-    <table>
+    <table className="table">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Title</th>
           <th>Created at</th>
           <th>Modified at</th>

@@ -16,6 +16,33 @@ interface LogOptions {
   formatter?: (entry: LogEntry) => string;
 }
 
+function safeSerialize(value: unknown): unknown {
+  const seen = new WeakSet();
+
+  const serialize = (val: unknown): unknown => {
+    if (val === null || typeof val !== "object") return val;
+
+    if ((val as Record<string, unknown>).$$typeof) return "[ReactElement]";
+
+    if (seen.has(val as object)) return "[Circular]";
+    seen.add(val as object);
+
+    if (Array.isArray(val)) return val.map(serialize);
+
+    const plain: Record<string, unknown> = {};
+    for (const key in val as object) {
+      try {
+        plain[key] = serialize((val as Record<string, unknown>)[key]);
+      } catch {
+        plain[key] = "[Unserializable]";
+      }
+    }
+    return plain;
+  };
+
+  return serialize(value);
+}
+
 function formatEntry(entry: LogEntry, format: "text" | "json"): string {
   if (format === "json") {
     return JSON.stringify(entry, null, 2);
@@ -42,4 +69,55 @@ function printLog(entry: LogEntry, options: LogOptions): void {
   } else {
     console.log(message);
   }
+}
+
+function log(options: LogOptions) {
+  return function (fn: Function) {
+    const fnName = fn.name || "anonymous";
+
+    return function (...args: unknown[]) {
+      const start = Date.now();
+      const timestamp = new Date().toISOString();
+
+      function buildEntry(result?: unknown, error?: unknown): LogEntry {
+        return {
+          level: error ? "ERROR" : options.level,
+          fnName,
+          args: args.map(safeSerialize),
+          result: result !== undefined ? safeSerialize(result) : undefined,
+          error: error ? String(error) : undefined,
+          duration: Date.now() - start,
+          timestamp,
+        };
+      }
+
+      let result: unknown;
+      try {
+        result = fn(...args);
+      } catch (error) {
+        printLog(buildEntry(undefined, error), options);
+        throw error;
+      }
+
+      if (result instanceof Promise) {
+        return result
+          .then((resolved) => {
+            if (options.level !== "ERROR") {
+              printLog(buildEntry(resolved), options);
+            }
+            return resolved;
+          })
+          .catch((error) => {
+            printLog(buildEntry(undefined, error), options);
+            throw error;
+          });
+      }
+
+      if (options.level !== "ERROR") {
+        printLog(buildEntry(result), options);
+      }
+
+      return result;
+    };
+  };
 }

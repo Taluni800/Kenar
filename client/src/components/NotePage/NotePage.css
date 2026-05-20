@@ -1,0 +1,15 @@
+.inputs {
+  width: 700px;
+}
+
+#textarea {
+  height: 500px;
+  resize: none;
+  border-color: black;
+}
+
+#saveBtn {
+  background-color: black;
+  color: white;
+  border: none;
+}

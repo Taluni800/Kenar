@@ -40,4 +40,27 @@ function memoization(
     delete cache[keyToRm];
     cacheSize--;
   }
+
+  return function (...args: unknown[]) {
+    const key = JSON.stringify(args);
+    const now = Date.now();
+
+    if (cache[key]) {
+      cache[key].lastUsed = now;
+      cache[key].useCount++;
+      return cache[key].value;
+    }
+
+    evict();
+
+    const result = fun(...args);
+    cache[key] = {
+      value: result,
+      lastUsed: now,
+      useCount: 1,
+      createdAt: now,
+    };
+    cacheSize++;
+    return result;
+  };
 }

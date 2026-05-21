@@ -6,6 +6,7 @@
   box-sizing: border-box;
   border-right: 1px solid #ccc;
   height: 100vh;
+  margin-left: 10px;
 }
 
 ul {
@@ -20,4 +21,9 @@ ul {
 a {
   text-decoration: none;
   padding: 5px;
+}
+
+.sidebar h1 {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

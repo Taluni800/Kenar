@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  align-items: center;
 }
 
 .inputs h3 {
@@ -14,20 +15,28 @@
 }
 
 .inputs input[type="text"] {
-  width: 100%;
+  width: 200px;
   box-sizing: border-box;
+  border: solid;
+  border-width: 2px;
+  border-color: black;
 }
 
 .inputs input[type="checkbox"] {
   height: 25px;
   width: 25px;
+  accent-color: black;
 }
 
 .ToDo-container {
   display: flex;
+  text-align: center;
   flex-direction: column;
   gap: 8px;
-  align-items: flex-start;
+}
+
+.ToDo-container h3 {
+  margin-top: 0;
 }
 
 .inputs button {
@@ -37,4 +46,18 @@
   width: 100%;
   padding: 0 16px;
   cursor: pointer;
+  border: none;
+  background-color: black;
+  color: white;
+}
+
+.todo-header {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.todo-header h3 {
+  margin: 0;
 }

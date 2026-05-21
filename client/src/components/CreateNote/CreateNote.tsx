@@ -70,17 +70,19 @@ function CreateNote() {
 
   return (
     <div className="form-container">
-      <h1>Create</h1>
       <div className="inputs">
+        <h1>Create</h1>
         <input type="text" ref={titleInputRef} placeholder="Title" />
 
-        <h3>ToDo</h3>
-        <div className="ToDo-container">
+        <div className="todo-header">
+          <h3>ToDo</h3>
           <input
             type="checkbox"
             ref={ToDoCheckRef}
             onClick={() => setShowToDo((prev) => !prev)}
           />
+        </div>
+        <div className="ToDo-container">
           {showToDo && (
             <div>
               <h3>Days till deadline</h3>
@@ -102,7 +104,7 @@ function CreateNote() {
             </div>
           )}
         </div>
-        <button onClick={plusBtn}>+</button>
+        <button onClick={plusBtn}>Create</button>
       </div>
     </div>
   );

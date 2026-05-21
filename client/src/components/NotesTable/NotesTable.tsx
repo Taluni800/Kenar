@@ -8,6 +8,10 @@ import { Link } from "react-router-dom";
 //   await db.notes.update(noteID, { pinned: !pinStatus });
 // }
 
+async function deleteNote(noteID: number) {
+  await db.notes.delete(noteID);
+}
+
 function* generateRows(notes: Note[]): Generator<ReactElement> {
   for (const note of notes) {
     const createdAt = new Date(note.createdTime).toLocaleString();
@@ -20,6 +24,11 @@ function* generateRows(notes: Note[]): Generator<ReactElement> {
         <td>{createdAt}</td>
         <td>{modifiedAt}</td>
         <td>{note.priority}</td>
+        <td>
+          <button onClick={() => deleteNote(note.id ? note.id : 0)}>
+            Delete
+          </button>
+        </td>
       </tr>
     );
   }
@@ -40,6 +49,7 @@ function NotesTable() {
           <th>Created at</th>
           <th>Modified at</th>
           <th>Priority</th>
+          <th>Button</th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>

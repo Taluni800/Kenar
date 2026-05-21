@@ -4,6 +4,7 @@
 
 #textarea {
   height: 500px;
+  width: 100%;
   resize: none;
   border-color: black;
 }

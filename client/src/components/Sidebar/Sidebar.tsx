@@ -8,8 +8,8 @@ function Sidebar() {
       <Link to="/dashboard">
         <h1 className="sidebar-item active">Dashboard</h1>
       </Link>
-      <h1>ToDo</h1>
       <nav className="navbar">
+        <h1>ToDo</h1>
         <ul className="nav-list">
           <NotesList />
         </ul>

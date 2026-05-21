@@ -12,9 +12,11 @@ function NotePage() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   async function saveNote() {
+    const now = Date.now();
     try {
       if (inputRef.current) {
         await db.notes.update(id, { content: inputRef.current.value });
+        await db.notes.update(id, { modifiedTime: now });
       }
     } catch {
       console.error("Problem with updating");
@@ -37,7 +39,7 @@ function NotePage() {
           name=""
           id="textarea"
           ref={inputRef}
-          placeholder="Loading..."
+          placeholder="No content yet. Start writing!"
         ></textarea>
         <button onClick={saveNote} id="saveBtn">
           Save

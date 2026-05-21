@@ -1,7 +1,7 @@
 import { db, type Note } from "../../db";
 import { useLiveQuery } from "dexie-react-hooks";
 import { Link } from "react-router-dom";
-import { log } from "utils";
+import { log, memoization } from "utils";
 
 class Queue<T> {
   private items: { value: T; priority: number }[] = [];
@@ -57,13 +57,15 @@ const buildQueue = log({ level: "INFO" })(function buildQueue(notes: Note[]) {
   return list;
 });
 
+const buildQueueMemo = memoization(buildQueue, 5, "LRU");
+
 function NotesList() {
   const notes = useLiveQuery(() => db.notes.toArray());
 
   if (!notes) return <p>Loading...</p>;
   if (notes.length === 0) return <p>No notes yet</p>;
 
-  const list = buildQueue(notes);
+  const list = buildQueueMemo(notes);
 
   return list;
 }

@@ -9,6 +9,7 @@ function memoization(
   fun: Function,
   maxSize = Infinity,
   strategy: string | Function = "LRU",
+  ttl = 0,
 ) {
   const cache: { [key: string]: Cache } = {};
   let cacheSize = 0;
@@ -44,6 +45,15 @@ function memoization(
   return function (...args: unknown[]) {
     const key = JSON.stringify(args);
     const now = Date.now();
+
+    if (strategy === "TTL" && ttl > 0) {
+      for (const k in cache) {
+        if (now - cache[k].createdAt > ttl) {
+          delete cache[k];
+          cacheSize--;
+        }
+      }
+    }
 
     if (cache[key]) {
       cache[key].lastUsed = now;

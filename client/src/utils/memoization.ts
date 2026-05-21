@@ -74,3 +74,5 @@ function memoization(
     return result;
   };
 }
+
+export default memoization;

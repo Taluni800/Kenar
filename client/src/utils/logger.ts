@@ -121,3 +121,5 @@ function log(options: LogOptions) {
     };
   };
 }
+
+export default log;
